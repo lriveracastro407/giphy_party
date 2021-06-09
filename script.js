@@ -11,47 +11,45 @@ var offset = 0;
 //api.giphy.com/v1/gifs/search
 //http://hostname/endpoint?param1=value1&param2=value2
 //key: ek2bpUjdCfswnYpGGyLQPHZsRMnkZZqu
+
 //controls submit behavior
 gifForm.addEventListener("submit", handleFormSubmit)
+load.addEventListener('submit', showMore)
 
-async function getResults(event){
-    //page won't refresh when input is submitted
-    //event.preventDefault()
-    //search input in a string
-    //gifInput = event.target.gifs
-    //gif = gifInput.value
-    const input = search.value
-    //console.log(gifInput)
-    //console.log(gif)
+async function getResults(){    
+    const input = search.value    
     //fetch data from API and store it in "data"
     apiurl = 'http://api.giphy.com/v1/gifs/search?api_key=ek2bpUjdCfswnYpGGyLQPHZsRMnkZZqu&q=' + input + '&limit=' + limit + '&rating' + rating 
-    console.log(apiurl)
     const response = await fetch(apiurl)
     const jsonResponse = await response.json();
     const data = jsonResponse.data;	
-    console.log(limit)
-    console.log(data)
-    console.log(data[0].url)
-
+    
     displayResults(data)
 }
 
 const displayResults = (data) => {
     data.forEach(element => {
-    console.log(element.url)
     gifArea.innerHTML += `
     <img src="${element.images.fixed_height.url}" alt="${element.title}" />
     `
-});
+    });
             
 }
+
 function handleFormSubmit(event) {
     event.preventDefault()
-    gifArea.innerHTML = ""
-    getResults()
-    search.value = ""
-
+    gifArea.innerHTML = "" //clears gifarea
+    getResults() //finds the called results
+    
+    search.value = "" //clears search bar after each search
+    
+    if (load.classList.contains('hidden')) {
+        load.classList.remove('hidden')
+      } //else {
+        //load.classList.add('hidden')
+      //}
 }
-function showMore() {
-
+function showMore(event) {
+    event.preventDefault()
+    getResults()
 }
