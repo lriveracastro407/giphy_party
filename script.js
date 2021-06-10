@@ -2,8 +2,8 @@
 const gifForm = document.querySelector('form')
 const gifArea = document.querySelector('#gif-area')
 const search = document.querySelector('#gifs')
-const apikey = "ek2bpUjdCfswnYpGGyLQPHZsRMnkZZqu"
-const limit = "9"
+const apikey = "my_api_key"
+const limit = "20"
 const rating = "g"
 const load = document.querySelector('.hidden')
 var pageNum = 0;
@@ -19,7 +19,7 @@ load.addEventListener('submit', showMore)
 async function getResults(){    
     const input = search.value    
     //fetch data from API and store it in "data"
-    apiurl = 'http://api.giphy.com/v1/gifs/search?api_key=ek2bpUjdCfswnYpGGyLQPHZsRMnkZZqu&q=' + input + '&limit=' + limit + '&rating' + rating 
+    apiurl = 'http://api.giphy.com/v1/gifs/search?api_key=${my_api_key}=' + input + '&limit=' + limit + '&rating' + rating 
     const response = await fetch(apiurl)
     const jsonResponse = await response.json();
     const data = jsonResponse.data;	
